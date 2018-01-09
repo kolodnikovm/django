@@ -1,0 +1,12 @@
+{% extends "flickstagram/base.html" %}
+
+{% block title %}Registration page{% endblock %}
+
+{% block content %}
+          <h1>Registration page</h1>
+          <form action="/your-name/" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit" />
+        </form>
+{% endblock %}

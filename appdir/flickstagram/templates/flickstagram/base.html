@@ -14,25 +14,27 @@
       <!-- Navigation -->
     <ul class="nav justify-content-center">
         <li class="nav-item">
-          <a class="nav-link active" href="{ url  }">Main</a>
+          <a class="nav-link" href="{% url 'main' %}">Main</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="{% url 'register' %}">Register</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="{% url 'login' %}">Login</a>
         </li>
     </ul>
 
-    {% block content %}
+   
     <div class="container">
-        <div class="row align-items-center justify-content-center">
-            <div class="col">
-              <h1>Main page</h1>
+        <div class="row">
+            <div class="col-lg-8 mx-auto ">
+              {% block content %}
+              <h1>Basic page</h1>
+              {% endblock %}
             </div>
         </div>
     </div>
-    {% endblock %}
+ 
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
