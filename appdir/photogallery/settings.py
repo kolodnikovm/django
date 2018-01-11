@@ -85,6 +85,8 @@ DATABASES = {
     }
 }
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'photogal', 'media')
+MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'photogal.User'
 
 # Password validation
