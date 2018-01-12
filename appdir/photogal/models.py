@@ -12,3 +12,7 @@ class Category(models.Model):
 
 class Picture(models.Model):
     upload = models.ImageField(upload_to='uploads/')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.upload.name

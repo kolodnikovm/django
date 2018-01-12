@@ -20,3 +20,10 @@ def photos(request):
 
     context = {'pics':pics}
     return render(request, 'photogal/photos.html', context)
+
+def category(request, category_name):
+    selected_category = Category.objects.get(category_name=category_name)
+    category_pics = Picture.objects.filter(category=selected_category)
+
+    context = {'category_pics': category_pics, 'category': selected_category}
+    return render(request, 'photogal/category_photos.html', context)
