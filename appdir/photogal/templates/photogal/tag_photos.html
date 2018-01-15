@@ -1,0 +1,21 @@
+{% extends "photogal/base.html" %}
+
+{% block content %}
+
+    <h1>#{{tag_name}} Photos</h1>
+
+    {% for pic in tag_pics %}
+
+        <div class="picture">
+
+            <img src="{{pic.upload.url}}" style="width:500px"/>
+
+            <p class="category">
+                <a href="{% url 'category' pic.category %}">{{pic.category}}</a>
+            </p>
+
+        </div>
+    
+    {%endfor%}
+
+{% endblock %}

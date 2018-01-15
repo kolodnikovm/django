@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import Category, Picture
+from .models import Category, Picture, Tag
 
 def main(request):
     categories = Category.objects.order_by('category_name')
@@ -21,9 +21,18 @@ def photos(request):
     context = {'pics':pics}
     return render(request, 'photogal/photos.html', context)
 
-def category(request, category_name):
-    selected_category = Category.objects.get(category_name=category_name)
-    category_pics = Picture.objects.filter(category=selected_category)
+def category_view(request, category_name):
+    category_pics = Picture.objects.filter(category__category_name__exact=str(category_name))
+    for pic in category_pics:
+        pic.pic_tags = pic.tags.all()
 
-    context = {'category_pics': category_pics, 'category': selected_category}
+    context = {
+        'category_pics': category_pics, 'category_name': str(category_name),
+        }
     return render(request, 'photogal/category_photos.html', context)
+
+def tag_view(request, tag_name):
+    tag_pics = Picture.objects.filter(tags__tag_name__iexact=str(tag_name))
+
+    context = {'tag_pics':tag_pics, 'tag_name': str(tag_name)}
+    return render(request, 'photogal/tag_photos.html', context)
