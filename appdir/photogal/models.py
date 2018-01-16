@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from .helpers import RandomFileName
 
 class User(AbstractUser):
     pass
@@ -21,10 +22,10 @@ class Tag(models.Model):
         return self.tag_name
 
 class Picture(models.Model):
-    upload = models.ImageField(upload_to='uploads/')
+    picture_name = models.CharField(max_length=20)
+    upload = models.ImageField(upload_to=RandomFileName('uploads'))
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag)
 
     def __str__(self):
-        return self.upload.name
-    
+        return self.picture_name

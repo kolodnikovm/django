@@ -1,6 +1,6 @@
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
 from .models import Category, Picture, Tag
+from .forms import UploadPictureForm
 
 def main(request):
     categories = Category.objects.order_by('category_name')
@@ -36,3 +36,15 @@ def tag_view(request, tag_name):
 
     context = {'tag_pics':tag_pics, 'tag_name': str(tag_name)}
     return render(request, 'photogal/tag_photos.html', context)
+
+def upload_view(request):
+    if request.method == 'POST':
+        form = UploadPictureForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('main')
+    else:
+        form = UploadPictureForm()
+
+        context = {'form': form}
+        return render(request, 'photogal/upload_photo.html', context)

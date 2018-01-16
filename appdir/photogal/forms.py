@@ -1,9 +1,12 @@
 from django import forms
 
-from .models import User
+from .models import Picture
 
-class RegisterForm(forms.ModelForm):
-    username = forms.CharField(label='Username', max_length='20')
-    # email = forms.CharField(label='E-mail', max_length='20')
-    password = forms.CharField(label='Password', max_length='20')
-    # confirm_password = forms.CharField(label='Confirm Password', max_length='20')
+class UploadPictureForm(forms.ModelForm):
+    class Meta:
+        model = Picture
+        fields = ['picture_name', 'upload', 'category', 'tags']
+        widgets = {
+            'category': forms.RadioSelect(),
+            'tags': forms.CheckboxSelectMultiple()
+        }
