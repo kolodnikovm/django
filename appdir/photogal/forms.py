@@ -5,10 +5,11 @@ from .models import Picture, User
 class UploadPictureForm(forms.ModelForm):
     class Meta:
         model = Picture
-        fields = ['picture_name', 'upload', 'category', 'tags']
+        fields = ['picture_name', 'upload', 'category', 'tags', 'user']
         widgets = {
             'category': forms.RadioSelect(),
-            'tags': forms.CheckboxSelectMultiple()
+            'tags': forms.CheckboxSelectMultiple(),
+            'user': forms.HiddenInput()
         }
 
 class RegisterForm(UserCreationForm):

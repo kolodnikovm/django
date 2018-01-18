@@ -60,9 +60,14 @@ def upload_view(request):
             form.save()
             return redirect('main')
     else:
-        form = UploadPictureForm()
+        form = UploadPictureForm(initial={"user":request.user.id})
 
         context = {'form': form}
         return render(request, 'photogal/upload_photo.html', context)
 
-from django.contrib.auth import logout
+
+def photo_info_view(request, pic_id):
+    picture = Picture.objects.get(pk=pic_id)
+
+    context = {'picture':picture}
+    return render(request, 'photogal/photo_info.html', context)

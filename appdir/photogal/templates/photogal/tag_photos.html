@@ -8,7 +8,7 @@
 
         <div class="picture">
 
-            <img src="{{pic.upload.url}}" style="width:500px"/>
+            <a href="{% url 'photo_info' pic.id %}"><img src="{{pic.upload.url}}" style="width:100%" /></a>
 
             <p class="category">
                 <a href="{% url 'category' pic.category %}">{{pic.category}}</a>

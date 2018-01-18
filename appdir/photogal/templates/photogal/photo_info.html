@@ -2,9 +2,11 @@
 
 {% block content %}
 
-    <h1>{{pic.name}} Info</h1>
+    <h1>{{picture.name}} Info</h1>
+    <h3>{{picture.picture_name}}</h3>
+    <h4>Author - {{picture.user.username}}</h3>
 
-    <img src="{{pic.upload.url}}" />
+    <img src="{{picture.upload.url}}" style="width:100%" />
 
 
 
