@@ -1,6 +1,8 @@
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from .models import Category, Picture, Tag
 from .forms import UploadPictureForm
+from .forms import RegisterForm
 
 def main(request):
     categories = Category.objects.order_by('category_name')
@@ -10,10 +12,24 @@ def main(request):
     return render(request, 'photogal/main.html', context)
 
 def register(request):
-    return render(request, 'photogal/auth/register.html')
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        
+        if form.is_valid():
+            
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
 
-def login(request):
-    return render(request, 'photogal/auth/login.html')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+
+            return redirect('/')
+    else:
+        form = RegisterForm()
+
+        context = {'form': form}
+        return render(request, 'registration/register.html', context)
 
 def photos(request):
     pics = Picture.objects.all()
@@ -48,3 +64,5 @@ def upload_view(request):
 
         context = {'form': form}
         return render(request, 'photogal/upload_photo.html', context)
+
+from django.contrib.auth import logout

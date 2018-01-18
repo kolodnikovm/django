@@ -1,6 +1,6 @@
 from django import forms
-
-from .models import Picture
+from django.contrib.auth.forms import UserCreationForm
+from .models import Picture, User
 
 class UploadPictureForm(forms.ModelForm):
     class Meta:
@@ -10,3 +10,9 @@ class UploadPictureForm(forms.ModelForm):
             'category': forms.RadioSelect(),
             'tags': forms.CheckboxSelectMultiple()
         }
+
+class RegisterForm(UserCreationForm):
+
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = UserCreationForm.Meta.fields
