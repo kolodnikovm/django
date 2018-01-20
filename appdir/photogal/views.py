@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from .models import Category, Picture, Tag
 from .forms import UploadPictureForm
 from .forms import RegisterForm
+from django.http import HttpResponse
+from .helpers import group_required
 
 def main(request):
     categories = Category.objects.order_by('category_name')
@@ -25,17 +27,14 @@ def register(request):
             login(request, user)
 
             return redirect('/')
+
+        else:
+            return HttpResponse('Error after Register')
     else:
         form = RegisterForm()
 
         context = {'form': form}
         return render(request, 'registration/register.html', context)
-
-def photos(request):
-    pics = Picture.objects.all()
-
-    context = {'pics':pics}
-    return render(request, 'photogal/photos.html', context)
 
 def category_view(request, category_name):
     category_pics = Picture.objects.filter(category__category_name__exact=str(category_name))
@@ -53,6 +52,7 @@ def tag_view(request, tag_name):
     context = {'tag_pics':tag_pics, 'tag_name': str(tag_name)}
     return render(request, 'photogal/tag_photos.html', context)
 
+@group_required('regular')
 def upload_view(request):
     if request.method == 'POST':
         form = UploadPictureForm(request.POST, request.FILES)

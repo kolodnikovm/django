@@ -2,8 +2,15 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .helpers import RandomFileName
 
+
 class User(AbstractUser):
-    pass
+    
+    class Meta:
+        permissions = (
+            ('can_post_pictures', 'To allow to upload photos'),
+            ('can_show_pictures', 'To allow to show uploaded photos')
+        )
+
 
 class Category(models.Model):
     category_name = models.CharField(max_length=30)
