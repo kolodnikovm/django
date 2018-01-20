@@ -24,9 +24,11 @@
           <a class="nav-link" href="{% url 'login' %}">Login</a>
         </li>
         {% else %}
+        {% if perms.photogal.can_post_pictures %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'upload' %}">Upload</a>
         </li>
+        {% endif %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
         </li>
