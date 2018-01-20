@@ -1,0 +1,21 @@
+{% extends "photogal/base.html" %}
+
+{% block content %}
+
+    <h1>#{{tag_name}} Photos</h1>
+
+    {% for pic in tag_pics %}
+        {% if pic.user.has_perms('photogal.can_post_pictures') %}
+        <div class="picture">
+
+            <a href="{% url 'photo_info' pic.id %}"><img src="{{pic.upload.url}}" style="width:100%" /></a>
+
+            <p class="category">
+                <a href="{% url 'category' pic.category %}">{{pic.category}}</a>
+            </p>
+
+        </div>
+        {% endif %}
+    {%endfor%}
+
+{% endblock %}

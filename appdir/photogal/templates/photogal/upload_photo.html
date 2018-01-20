@@ -1,0 +1,13 @@
+{% extends "photogal/base.html" %}
+
+{% block content %}
+
+    <h1>Upload a Pic</h1>
+
+    <form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit" />
+    </form>
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "photogal/base.html" %}
+
+{% block content %}
+
+    <h1>{{picture.name}} Info</h1>
+    <h3>{{picture.picture_name}}</h3>
+    <h4>Author - {{picture.user.username}}</h3>
+
+    <img src="{{picture.upload.url}}" style="width:100%" />
+
+
+
+{% endblock %}

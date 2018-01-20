@@ -1,0 +1,22 @@
+{% extends "photogal/base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+
+          <h1>Register</h1>
+          </br>
+          
+          {% if form.errors %}
+            <p>Some Errors occured</p>
+          {% endif %}
+
+          <form action="{% url 'register' %}" method="POST">
+              {% csrf_token %}
+
+              {{ form.as_p }}
+
+              <input type="submit" value="Register">
+          </form>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "photogal/base.html" %}
+
+{% block content %}
+    <h1>All Photos</h1>
+    {% for pic in pics %}
+    <div class="picture">
+        <img src="{{pic.upload.url}}" style="width:500px"/>
+        <p class="category">{{pic.category}}</p>
+    </div>
+    
+    {% endfor %}
+{% endblock %}
