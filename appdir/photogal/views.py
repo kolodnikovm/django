@@ -37,7 +37,6 @@ def register(request):
         context = {'form': form}
         return render(request, 'registration/register.html', context)
 
-
 def category_view(request, category_name):
     category_pics = Picture.objects.filter(
         category__category_name__exact=str(category_name))
@@ -55,7 +54,6 @@ def tag_view(request, tag_name):
 
     context = {'tag_pics': tag_pics, 'tag_name': str(tag_name)}
     return render(request, 'photogal/tag_photos.html', context)
-
 
 @group_required('regular')
 def upload_view(request):

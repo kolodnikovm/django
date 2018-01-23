@@ -9,6 +9,10 @@ class GalleryAdmin(admin.ModelAdmin):
     list_filter = ('category',)
 
 
+class GalleryAdmin(admin.ModelAdmin):
+    search_fields = ['picture_name']
+    list_filter = ('category',)
+
 admin.site.register(User, UserAdmin)
 admin.site.register(Category)
 admin.site.register(Picture, GalleryAdmin)
