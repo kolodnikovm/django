@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+
 from .models import Picture, User
+
 
 class UploadPictureForm(forms.ModelForm):
     class Meta:
@@ -11,6 +13,7 @@ class UploadPictureForm(forms.ModelForm):
             'tags': forms.CheckboxSelectMultiple(),
             'user': forms.HiddenInput()
         }
+
 
 class RegisterForm(UserCreationForm):
 

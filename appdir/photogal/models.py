@@ -1,5 +1,6 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
+
 from .helpers import RandomFileName
 
 
@@ -20,6 +21,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.category_name
+
 
 class Tag(models.Model):
     tag_name = models.CharField(max_length=20)

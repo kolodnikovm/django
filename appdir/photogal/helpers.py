@@ -1,9 +1,10 @@
 import os.path
 import uuid
-from django.utils.deconstruct import deconstructible
-from django.utils import six
-from django.core.exceptions import PermissionDenied
+
 from django.contrib.auth.decorators import user_passes_test
+from django.core.exceptions import PermissionDenied
+from django.utils import six
+from django.utils.deconstruct import deconstructible
 
 
 def group_required(group, login_url=None, raise_exception=False):
@@ -28,6 +29,7 @@ def group_required(group, login_url=None, raise_exception=False):
         # As the last resort, show the login form
         return False
     return user_passes_test(check_perms, login_url=login_url)
+
 
 @deconstructible
 class RandomFileName(object):

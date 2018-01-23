@@ -5,7 +5,7 @@
     <h1>#{{tag_name}} Photos</h1>
 
     {% for pic in tag_pics %}
-
+  
         <div class="picture">
 
             <a href="{% url 'photo_info' pic.id %}"><img src="{{pic.upload.url}}" style="width:100%" /></a>
@@ -15,7 +15,6 @@
             </p>
 
         </div>
-
     {%endfor%}
 
 {% endblock %}
