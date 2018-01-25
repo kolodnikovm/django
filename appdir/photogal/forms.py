@@ -1,8 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import Picture
 from users.models import ExternalUser
+
+from .models import Picture
 
 
 class UploadPictureForm(forms.ModelForm):

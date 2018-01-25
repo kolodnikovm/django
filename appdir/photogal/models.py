@@ -1,8 +1,10 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
-from django.contrib.auth.models import Group, Permission
-from .helpers import RandomFileName
+
 from users.models import ExternalUser
+
+from .helpers import RandomFileName
+
 
 class Category(models.Model):
     category_name = models.CharField(max_length=30)

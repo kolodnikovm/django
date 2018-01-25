@@ -5,9 +5,6 @@ from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import PermissionDenied
 from django.utils import six
 from django.utils.deconstruct import deconstructible
-from django.utils import six
-from django.core.exceptions import PermissionDenied
-from django.contrib.auth.decorators import user_passes_test
 
 
 def group_required(group, login_url=None, raise_exception=False):
