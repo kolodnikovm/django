@@ -1,6 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Picture, User
+
+from users.models import ExternalUser
+
+from .models import Picture
+
 
 class UploadPictureForm(forms.ModelForm):
     class Meta:
@@ -12,8 +16,9 @@ class UploadPictureForm(forms.ModelForm):
             'user': forms.HiddenInput()
         }
 
+
 class RegisterForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
-        model = User
+        model = ExternalUser
         fields = UserCreationForm.Meta.fields
