@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'users',
     'photogal',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -73,7 +74,7 @@ WSGI_APPLICATION = 'photogallery.wsgi.application'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'photogal', 'media')
 MEDIA_URL = '/media/'
-AUTH_USER_MODEL = 'photogal.User'
+AUTH_USER_MODEL = 'users.ExternalUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators

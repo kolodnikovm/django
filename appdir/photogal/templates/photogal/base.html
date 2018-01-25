@@ -24,7 +24,7 @@
           <a class="nav-link" href="{% url 'login' %}">Login</a>
         </li>
         {% else %}
-        {% if perms.photogal.can_post_pictures %}
+        {% if user.groups.all.0.name == 'regular' %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'upload' %}">Upload</a>
         </li>

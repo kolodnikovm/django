@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import Picture, User
+from .models import Picture
+from users.models import ExternalUser
 
 
 class UploadPictureForm(forms.ModelForm):
@@ -18,5 +19,5 @@ class UploadPictureForm(forms.ModelForm):
 class RegisterForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
-        model = User
+        model = ExternalUser
         fields = UserCreationForm.Meta.fields

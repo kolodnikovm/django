@@ -1,8 +1,11 @@
-{% extends "photogal/base.html" %} {% block content %}
+{% extends "photogal/base.html" %} 
+
+{% block content %}
 
 <h1>{{category_name}} Photos</h1>
 
-{% for pic in category_pics %} {% if pic.user.has_perms('photogal.can_post_pictures') %}
+{% for pic in category_pics %}
+{% if pic.user.groups.all.0.name == 'regular' %}
 <div class="picture">
 
     <a href="{% url 'photo_info' pic.id %}">
@@ -19,4 +22,6 @@
 
 
 </div>
-{% endfor %} {% endblock %}
+{% endif %}
+{% endfor %} 
+{% endblock %}

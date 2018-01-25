@@ -3,7 +3,7 @@
 <h1>#{{tag_name}} Photos</h1>
 
 {% for pic in tag_pics %}
-
+{% if pic.user.groups.all.0.name == 'banned' %}
 <div class="picture">
 
     <a href="{% url 'photo_info' pic.id %}">
@@ -15,4 +15,6 @@
     </p>
 
 </div>
-{%endfor%} {% endblock %}
+{% endif %}
+{% endfor %} 
+{% endblock %}
