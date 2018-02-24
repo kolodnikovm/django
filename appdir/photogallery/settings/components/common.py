@@ -72,7 +72,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'photogallery.wsgi.application'
 
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'photogal', 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'photogal', 'media')
+print('Base root', BASE_DIR, '\n')
+print('Project dir', PROJECT_DIR, '\n')
+print('Media root', MEDIA_ROOT)
 MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'users.ExternalUser'
 
