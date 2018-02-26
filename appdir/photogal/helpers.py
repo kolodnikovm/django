@@ -28,7 +28,7 @@ def group_required(group, login_url=None, raise_exception=False):
             raise PermissionDenied
         # As the last resort, show the login form
         return False
-    return user_passes_test(check_perms, login_url=login_url)
+    return user_passes_test(check_perms, login_url='/')
 
 
 @deconstructible

@@ -13,8 +13,10 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))))
+PROJECT_DIR = os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -72,10 +74,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'photogallery.wsgi.application'
 
 
-MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'photogal', 'media')
-print('Base root', BASE_DIR, '\n')
-print('Project dir', PROJECT_DIR, '\n')
-print('Media root', MEDIA_ROOT)
+MEDIA_ROOT = os.path.join(BASE_DIR, 'photogal', 'media')
+
 MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'users.ExternalUser'
 

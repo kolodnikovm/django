@@ -1,7 +1,8 @@
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from django.views.generic import ListView, DetailView
+from django.utils.decorators import method_decorator
+from django.views.generic import DetailView, ListView
 from django.views.generic.edit import FormView
 
 from .forms import RegisterForm, UploadPictureForm
@@ -21,6 +22,7 @@ class Register(FormView):
     success_url = '/'
 
     def form_valid(self, form):
+        form.save()
         return super().form_valid(form)
 
 
@@ -30,6 +32,7 @@ class PicturesByCategory(ListView):
 
     def get_queryset(self):
         return Picture.objects. \
+            filter(user__groups__name='regular'). \
             filter(category__name__iexact=self.kwargs['category_name'])
 
     def get_context_data(self, **kwargs):
@@ -44,6 +47,7 @@ class PicturesByTag(ListView):
 
     def get_queryset(self):
         return Picture.objects. \
+            filter(user__groups__name='regular'). \
             filter(tags__name__iexact=self.kwargs['tag_name'])
 
     def get_context_data(self, **kwargs):
@@ -52,6 +56,7 @@ class PicturesByTag(ListView):
         return context
 
 
+@method_decorator(group_required('regular'), name='dispatch')
 class UploadView(FormView):
     template_name = 'photogal/upload_photo.html'
     form_class = UploadPictureForm
@@ -63,21 +68,8 @@ class UploadView(FormView):
         return initial
 
     def form_valid(self, form):
+        form.save()
         return super().form_valid(form)
-
-
-# @group_required('regular')
-# def upload_view(request):
-#     if request.method == 'POST':
-#         form = UploadPictureForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('main')
-#     else:
-#         form = UploadPictureForm(initial={"user": request.user.id})
-
-#         context = {'form': form}
-#         return render(request, 'photogal/upload_photo.html', context)
 
 
 class PictureDetail(DetailView):
