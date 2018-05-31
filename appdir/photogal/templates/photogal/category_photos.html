@@ -1,27 +1,22 @@
-{% extends "photogal/base.html" %} 
+{% extends "photogal/base.html" %} {% block content %}
 
-{% block content %}
+<h1>{{ category_name }} photos</h1>
 
-<h1>{{category_name}} Photos</h1>
-
-{% for pic in category_pics %}
-{% if pic.user.groups.all.0.name == 'regular' %}
+{% for pic in pictures %}
 <div class="picture">
 
-    <a href="{% url 'photo_info' pic.id %}">
+    <a href="{% url 'photo_detail' pic.id %}">
         <img src="{{pic.upload.url}}" style="width:100%" />
     </a>
 
     <ul>
-        {% for tag in pic.pic_tags %}
+        {% for tag in pic.tags.all %}
         <li style="display:inline;">
-            <a href="{% url 'tag' tag.tag_name %}">{{tag.tag_name}}</a>
+            <a href="{% url 'tag' tag.name %}">{{tag.name}}</a>
         </li>
         {% endfor %}
     </ul>
 
 
 </div>
-{% endif %}
-{% endfor %} 
-{% endblock %}
+{% endfor %} {% endblock %}

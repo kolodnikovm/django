@@ -1,20 +1,18 @@
-{% extends "photogal/base.html" %}
+{% extends "photogal/base.html" %} {% block title %}Main page{% endblock %} {% block content %}
 
-{% block title %}Main page{% endblock %}
-
-{% block content %}
-
-          <h1>Main page</h1>
-          {% if user.is_authenticated %}
-          <h3>Hello, {{user.username}}</h3>
-          <h5>{{ user.groups.all.0 }} user</h5>
-          {% endif %}
-          <hr>
-          <h3>Categories</h3>
-          <ol>
-              {% for category in categories %}
-              <li><a href="{% url 'category' category.category_name %}">{{ category.category_name }}</a></li>
-              {% endfor %}
-          </ol>
+<h1>Main page</h1>
+{% if user.is_authenticated %}
+<h3>Hello, {{user.username}}</h3>
+<h5>{{ user.groups.all.0 }} user</h5>
+{% endif %}
+<hr>
+<h3>Categories</h3>
+<ol>
+    {% for category in all_categories %}
+    <li>
+        <a href="{% url 'category' category.name %}">{{ category.name }}</a>
+    </li>
+    {% endfor %}
+</ol>
 
 {% endblock %}

@@ -1,20 +1,18 @@
 {% extends "photogal/base.html" %} {% block content %}
 
-<h1>#{{tag_name}} Photos</h1>
+<h1>#{{tag_name}} photos</h1>
 
-{% for pic in tag_pics %}
-{% if pic.user.groups.all.0.name == 'banned' %}
+{% for pic in pictures %}
+
 <div class="picture">
 
-    <a href="{% url 'photo_info' pic.id %}">
+    <a href="{% url 'photo_detail' pic.id %}">
         <img src="{{pic.upload.url}}" style="width:100%" />
     </a>
 
     <p class="category">
-        <a href="{% url 'category' pic.category %}">{{pic.category}}</a>
+        <a href="{% url 'category' pic.category.name %}">{{pic.category.name}}</a>
     </p>
 
 </div>
-{% endif %}
-{% endfor %} 
-{% endblock %}
+{% endfor %} {% endblock %}

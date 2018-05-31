@@ -3,7 +3,7 @@ from django.db import models
 
 
 class ExternalUser(AbstractUser):
-    
+
     class Meta:
         permissions = (
             ('can_post_pictures', 'To allow to upload photos'),

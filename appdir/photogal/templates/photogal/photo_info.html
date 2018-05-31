@@ -1,12 +1,7 @@
-{% extends "photogal/base.html" %}
+{% extends "photogal/base.html" %} {% block content %}
 
-{% block content %}
-{% if picture.user.groups.all.0.name == 'regular' %}
-    <h1>{{picture.name}} Info</h1>
-    <h3>{{picture.picture_name}}</h3>
-    <h4>Author - {{picture.user.username}}</h3>
+<h1>{{object.name}} detail</h1>
+<h3>{{object.object_name}}</h3>
+<h4>Author - {{object.user.username}}</h3>
 
-    <img src="{{picture.upload.url}}" style="width:100%" />
-
-{% endif %}
-{% endblock %}
+    <img src="{{object.upload.url}}" style="width:100%" /> {% endblock %}

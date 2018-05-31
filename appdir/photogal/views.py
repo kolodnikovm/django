@@ -1,73 +1,78 @@
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.utils.decorators import method_decorator
+from django.views.generic import DetailView, ListView
+from django.views.generic.edit import FormView
 
 from .forms import RegisterForm, UploadPictureForm
 from .helpers import group_required
 from .models import Category, Picture
 
 
-def main(request):
-    categories = Category.objects.order_by('category_name')
-
-    context = {'categories': categories}
-    return render(request, 'photogal/main.html', context)
-
-
-def register(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-
-            form.save()
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']
-
-            user = authenticate(username=username, password=password)
-            login(request, user)
-
-            return redirect('/')
-    else:
-        form = RegisterForm()
-
-    return render(request, 'registration/register.html', {'form': form})
+class Main(ListView):
+    model = Category
+    template_name = 'photogal/main.html'
+    context_object_name = 'all_categories'
 
 
-def category_view(request, category_name):
-    category_pics = Picture.objects.filter(
-        category__category_name__exact=str(category_name))
-    for pic in category_pics:
-        pic.pic_tags = pic.tags.all()
+class Register(FormView):
+    template_name = 'registration/register.html'
+    form_class = RegisterForm
+    success_url = '/'
 
-    context = {
-        'category_pics': category_pics, 'category_name': str(category_name),
-    }
-    return render(request, 'photogal/category_photos.html', context)
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
 
 
-def tag_view(request, tag_name):
-    tag_pics = Picture.objects.filter(tags__tag_name__iexact=str(tag_name))
+class PicturesByCategory(ListView):
+    template_name = 'photogal/category_photos.html'
+    context_object_name = 'pictures'
 
-    context = {'tag_pics': tag_pics, 'tag_name': str(tag_name)}
-    return render(request, 'photogal/tag_photos.html', context)
+    def get_queryset(self):
+        return Picture.objects. \
+            filter(user__groups__name='regular'). \
+            filter(category__name__iexact=self.kwargs['category_name'])
 
-
-@group_required('regular')
-def upload_view(request):
-    if request.method == 'POST':
-        form = UploadPictureForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('main')
-    else:
-        form = UploadPictureForm(initial={"user": request.user.id})
-
-        context = {'form': form}
-        return render(request, 'photogal/upload_photo.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category_name'] = self.kwargs['category_name']
+        return context
 
 
-def photo_info_view(request, pic_id):
-    picture = Picture.objects.get(pk=pic_id)
+class PicturesByTag(ListView):
+    template_name = 'photogal/tag_photos.html'
+    context_object_name = 'pictures'
 
-    context = {'picture': picture}
-    return render(request, 'photogal/photo_info.html', context)
+    def get_queryset(self):
+        return Picture.objects. \
+            filter(user__groups__name='regular'). \
+            filter(tags__name__iexact=self.kwargs['tag_name'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tag_name'] = self.kwargs['tag_name']
+        return context
+
+
+@method_decorator(group_required('regular'), name='dispatch')
+class UploadView(FormView):
+    template_name = 'photogal/upload_photo.html'
+    form_class = UploadPictureForm
+    success_url = '/'
+
+    def get_initial(self):
+        initial = super(UploadView, self).get_initial()
+        initial['user'] = self.request.user.id
+        return initial
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+
+class PictureDetail(DetailView):
+    model = Picture
+    template_name = 'photogal/photo_info.html'
+    pk_url_kwarg = 'picture_id'

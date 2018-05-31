@@ -1,24 +1,20 @@
-{% extends "photogal/base.html" %}
+{% extends "photogal/base.html" %} {% block title %}Login{% endblock %} {% block content %}
 
-{% block title %}Login{% endblock %}
+<h1>Log In</h1>
+</br>
 
-{% block content %}
+{% if form.errors %}
+<p>Please enter a correct username and password. Note that both fields may be case-sensitive.</p>
+{% endif %}
 
-          <h1>Log In</h1>
-          </br>
-          
-          {% if form.errors %}
-            <p>Some Errors occured</p>
-          {% endif %}
+<form action="{% url 'login' %}" method="POST">
+  {% csrf_token %}
 
-          <form action="{% url 'login' %}" method="POST">
-              {% csrf_token %}
+  <p>Username: {{ form.username }}</p>
+  <p>Password: {{ form.password }}</p>
 
-              <p>Username: {{ form.username }}</p>
-              <p>Password: {{ form.password }}</p>
-
-              <input type="submit" value="Login">
-              <input type="hidden" name="next" value="{{ next }}">
-          </form>
+  <input type="submit" value="Login">
+  <input type="hidden" name="next" value="{{ next }}">
+</form>
 
 {% endblock %}
